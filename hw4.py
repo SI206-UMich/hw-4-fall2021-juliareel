@@ -1,6 +1,8 @@
 
 import unittest
 
+# testing a git commit
+
 # The Customer class
 # The Customer class represents a customer who will order from the stalls.
 class Customer: 
