@@ -30,7 +30,8 @@ class Customer:
     # Submit_order takes a cashier, a stall and an amount as parameters, 
     # it deducts the amount from the customer’s wallet and calls the receive_payment method on the cashier object
     def submit_order(self, cashier, stall, amount): 
-        pass
+        self.wallet = self.wallet - amount
+        cashier.receive_payment(cashier, stall, amount)
 
     # The __str__ method prints the customer's information.    
     def __str__(self):
@@ -74,7 +75,39 @@ class Cashier:
 ## Complete the Stall class here following the instructions in HW_4_instructions_rubric
 class Stall:
     
-    pass
+    # Constructor
+    def __init__(self, name, inventory, food_cost = 7, earnings = 0):
+        self.name = name
+        self.inventory = inventory
+        self.food_cost = food_cost
+        self.earnings = earnings
+    
+    # Takes the food name and the quantity. If the stall has enough food, 
+    # it will decrease the quantity of that food in the inventory.
+    def process_order(self, food_name, food_quantity):
+        pass
+
+    # Takes the food name and the quantity and returns True if there 
+    # is enough food left in the inventory and False otherwise.
+    def has_item(self, food_name, food_quantity):
+        pass
+
+    # Takes the food name and the quantity. It will add the quantity to the 
+    # existing quantity if the item exists in the inventory dictionary or create a new item in 
+    # the inventory dictionary with the item name as the key and the quantity as the value.
+    def stock_up(self, food_name, food_quantity):
+        pass
+
+    # takes the quantity and returns the total for an order. 
+    # Since all the foods in one stall have the same cost, 
+    # you only need to know the quantity of food items that the customer has ordered.
+    def compute_cost(self, food_quantity):
+        pass
+
+    # returns a string with the information in the instance variables using the format shown below:
+    #  “Hello, we are [NAME]. This is the current menu [INVENTORY KEYS AS LIST]. We charge $[COST] per item. We have $[EARNINGS] in total.”
+    def __str__(self):
+        pass
 
 
 class TestAllMethods(unittest.TestCase):
