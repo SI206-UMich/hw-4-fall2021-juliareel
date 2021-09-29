@@ -113,12 +113,13 @@ class Stall:
     # Since all the foods in one stall have the same cost, 
     # you only need to know the quantity of food items that the customer has ordered.
     def compute_cost(self, food_quantity):
-        pass
+        return food_quantity * self.food_cost
 
     # returns a string with the information in the instance variables using the format shown below:
     #  “Hello, we are [NAME]. This is the current menu [INVENTORY KEYS AS LIST]. We charge $[COST] per item. We have $[EARNINGS] in total.”
     def __str__(self):
-        pass
+        return ("Hello, we are " + int(self.name) + ". This is the current menu " + str(list(self.inventory.keys())) + 
+        ". We charge $" + int(self.food_cost) + "per item. We have $" + int(self.earnings) + " in total.")
 
 
 class TestAllMethods(unittest.TestCase):
