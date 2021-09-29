@@ -76,21 +76,25 @@ class Cashier:
 class Stall:
     
     # Constructor
-    def __init__(self, name, inventory, food_cost = 7, earnings = 0):
+    def __init__(self, name, inventory=[], food_cost = 7, earnings = 0):
         self.name = name
-        self.inventory = inventory
+        self.inventory = inventory[:]
         self.food_cost = food_cost
         self.earnings = earnings
     
     # Takes the food name and the quantity. If the stall has enough food, 
     # it will decrease the quantity of that food in the inventory.
     def process_order(self, food_name, food_quantity):
-        pass
+        if self.has_item(food_name, food_quantity):
+            self.inventory[food_name] -= food_quantity
 
     # Takes the food name and the quantity and returns True if there 
     # is enough food left in the inventory and False otherwise.
     def has_item(self, food_name, food_quantity):
-        pass
+        if self.inventory[food_name] >= food_quantity:
+            return True
+        else:
+            return False
 
     # Takes the food name and the quantity. It will add the quantity to the 
     # existing quantity if the item exists in the inventory dictionary or create a new item in 
