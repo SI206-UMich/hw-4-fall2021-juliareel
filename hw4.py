@@ -78,7 +78,7 @@ class Stall:
     # Constructor
     def __init__(self, name, inventory=[], food_cost = 7, earnings = 0):
         self.name = name
-        self.inventory = inventory[:]
+        self.inventory = inventory[:]  #food is key, quantities are values
         self.food_cost = food_cost
         self.earnings = earnings
     
@@ -100,7 +100,14 @@ class Stall:
     # existing quantity if the item exists in the inventory dictionary or create a new item in 
     # the inventory dictionary with the item name as the key and the quantity as the value.
     def stock_up(self, food_name, food_quantity):
-        pass
+        # if the food item exists as a key in the inventory, increase value by the quantity
+        if food_name in self.inventory:
+            self.inventory[food_name] += food_quantity
+
+        # else; if the food item is not a key:
+            # create a new item as a key in the dictionary and put the quantity as the value
+        else: 
+            self.inventory[food_name] = food_quantity
 
     # takes the quantity and returns the total for an order. 
     # Since all the foods in one stall have the same cost, 
