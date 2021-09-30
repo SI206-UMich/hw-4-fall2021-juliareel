@@ -31,7 +31,7 @@ class Customer:
     # it deducts the amount from the customer’s wallet and calls the receive_payment method on the cashier object
     def submit_order(self, cashier, stall, amount): 
         self.wallet = self.wallet - amount
-        cashier.receive_payment(cashier, stall, amount)
+        cashier.receive_payment(stall, amount)
 
     # The __str__ method prints the customer's information.    
     def __str__(self):
@@ -76,10 +76,10 @@ class Cashier:
 class Stall:
     
     # Constructor
-    def __init__(self, name, inventory=[], food_cost = 7, earnings = 0):
+    def __init__(self, name, inventory={}, cost = 7, earnings = 0):
         self.name = name
-        self.inventory = inventory[:]  #food is key, quantities are values
-        self.food_cost = food_cost
+        self.inventory = inventory  #food is key, quantities are values
+        self.cost = cost
         self.earnings = earnings
     
     # Takes the food name and the quantity. If the stall has enough food, 
@@ -113,13 +113,13 @@ class Stall:
     # Since all the foods in one stall have the same cost, 
     # you only need to know the quantity of food items that the customer has ordered.
     def compute_cost(self, food_quantity):
-        return food_quantity * self.food_cost
+        return food_quantity * self.cost
 
     # returns a string with the information in the instance variables using the format shown below:
     #  “Hello, we are [NAME]. This is the current menu [INVENTORY KEYS AS LIST]. We charge $[COST] per item. We have $[EARNINGS] in total.”
     def __str__(self):
         return ("Hello, we are " + int(self.name) + ". This is the current menu " + str(list(self.inventory.keys())) + 
-        ". We charge $" + int(self.food_cost) + "per item. We have $" + int(self.earnings) + " in total.")
+        ". We charge $" + int(self.cost) + "per item. We have $" + int(self.earnings) + " in total.")
 
 
 class TestAllMethods(unittest.TestCase):
@@ -194,8 +194,9 @@ class TestAllMethods(unittest.TestCase):
     def test_compute_cost(self):
         #what's wrong with the following statements?
         #can you correct them?
-        self.assertEqual(self.s1.compute_cost(self.s1,5), 51)
-        self.assertEqual(self.s3.compute_cost(self.s3,6), 45)
+        self.assertEqual(self.s1.compute_cost(5), 50)
+        self.assertEqual(self.s3.compute_cost(6), 42)
+        # compute_cost is an object of the stall class, just takes food_quantity
 
 	# Check that the stall can properly see when it is empty
     def test_has_item(self):
@@ -270,11 +271,11 @@ def main():
     #case 2: the casher has the stall, but not enough ordered food or the ordered food item
     cust1.validate_order(cash1, s1, 'tomato', 8)
     cust2.validate_order(cash2, s3, 'carrot', 15)
-    cust3.validate_order(cash1, s2, 'banana', 3)
+    cust3.validate_order(cash1, s2, 'corn', 8)
     
     #case 3: the customer does not have enough money to pay for the order: 
     cust1.validate_order(cash1, s1, 'strawberry', 22)
-    cust2.validate_order(cash2, s3, 'corn', 16)
+    cust2.validate_order(cash2, s3, 'banana', 12)
     cust3.validate_order(cash1, s2, 'carrot', 3)
     
     #case 4: the customer successfully places an order
