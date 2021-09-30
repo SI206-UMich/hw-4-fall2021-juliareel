@@ -227,17 +227,61 @@ class TestAllMethods(unittest.TestCase):
 def main():
     #Create different objects 
 
+    # create at least two inventory dictionaries
+    fruits = {'apple': 19, 
+              'banana': 12, 
+              'tomato': 5,
+              'strawberry': 53}
+    vegetables = {'carrot': 12,
+                  'broccoli': 14,
+                  'corn': 7}
+    fruits_and_veggies = {'apple': 19, 
+                          'banana': 12, 
+                          'tomato': 5,
+                          'strawberry': 53,
+                          'carrot': 12,
+                          'broccoli': 14,
+                          'corn': 7}
+
+    # create at least 3 customer objects
+    cust1 = Customer('Steve', 153)
+    cust2 = Customer('Linda', 84)
+    cust3 = Customer('Jake', 13)
+
+    # create at least 2 stall objects
+    s1 = Stall('Fruit Stand', fruits, 8, 0)
+    s2 = Stall('Vegetable Stand', vegetables, 5, 0)
+    s3 = Stall('Fruits and Vegetables', fruits_and_veggies, 6, 0)
+    
+    # create at least 2 cashier objects
+    cash1 = Cashier('Emily', [s1, s2])
+    cash2 = Cashier('Ben', [s3])
+
+    # have each customer place at least one order (by calling validate_order) 
+    # and try all cases in the validate_order function above.
+
     #Try all cases in the validate_order function
     #Below you need to have *each customer instance* try the four cases
     #case 1: the cashier does not have the stall 
+    cust1.validate_order(cash2, s1, 'apple', 5)
+    cust2.validate_order(cash1, s3, 'corn', 2)
+    cust3.validate_order(cash2, s2, 'broccoli', 8)
     
     #case 2: the casher has the stall, but not enough ordered food or the ordered food item
+    cust1.validate_order(cash1, s1, 'tomato', 8)
+    cust2.validate_order(cash2, s3, 'carrot', 15)
+    cust3.validate_order(cash1, s2, 'banana', 3)
     
     #case 3: the customer does not have enough money to pay for the order: 
+    cust1.validate_order(cash1, s1, 'strawberry', 22)
+    cust2.validate_order(cash2, s3, 'corn', 16)
+    cust3.validate_order(cash1, s2, 'carrot', 3)
     
     #case 4: the customer successfully places an order
+    cust1.validate_order(cash2, s3, 'tomato', 4)
+    cust2.validate_order(cash1, s1, 'banana', 3)
+    cust3.validate_order(cash1, s2, 'carrot', 1)
 
-    pass
 
 if __name__ == "__main__":
 	main()
