@@ -1,5 +1,6 @@
 
 import unittest
+import random   # for use in extra credit
 
 # testing a git commit
 
@@ -46,6 +47,7 @@ class Cashier:
     def __init__(self, name, directory =[]):
         self.name = name
         self.directory = directory[:] # make a copy of the directory
+        self.num_customers = 0      # for use in extra credit
 
     # Whether the stall is in the cashier's directory
     def has_stall(self, stall):
@@ -65,12 +67,37 @@ class Cashier:
 	# Function returns cost of the order, using compute_cost method
     def place_order(self, stall, item, quantity):
         stall.process_order(item, quantity)
-        return stall.compute_cost(quantity) 
+        self.num_customers += 1     # for extra credit
+        
+        # extra credit:
+            # changed return statements to take into account
+            # the results of the lucky draw. if the draw is
+            # a win, the bill is deducted by $10, giving them to the reward.
+            # won't matter if the bill is less than $10, the extra crdit
+            # will still be added to their accout 
+        if self.num_customers == 10:
+            if self.run_lucky_draw() == "win":
+                return stall.compute_cost(quantity) - 10
+            else: 
+                return stall.compute_cost(quantity) 
+        
     
     # string function.
     def __str__(self):
 
         return "Hello, this is the " + self.name + " cashier. We take preloaded market payment cards only. We have " + str(sum([len(category) for category in self.directory.values()])) + " vendors in the farmers' market."
+
+    # extra credit function
+    # call it when num_customers == 10
+    # returns "win" if customer wins, "lose" otherwise
+    # use randint tool from [1 to 100]. If [1-5] is selected, they win 
+        # simulates a 5% probability
+    def run_lucky_draw(self):
+        random_val = random.randint(1, 100)
+        if random_val >= 1 and random_val <= 5:
+            return "win"
+        else:
+            return "lose"
 
 ## Complete the Stall class here following the instructions in HW_4_instructions_rubric
 class Stall:
@@ -196,7 +223,6 @@ class TestAllMethods(unittest.TestCase):
         #can you correct them?
         self.assertEqual(self.s1.compute_cost(5), 50)
         self.assertEqual(self.s3.compute_cost(6), 42)
-        # compute_cost is an object of the stall class, just takes food_quantity
 
 	# Check that the stall can properly see when it is empty
     def test_has_item(self):
