@@ -295,8 +295,8 @@ def main():
     # have each customer place at least one order (by calling validate_order) 
     # and try all cases in the validate_order function above.
 
-    #Try all cases in the validate_order function
-    #Below you need to have *each customer instance* try the four cases
+    # Try all cases in the validate_order function
+    # Below you need to have *each customer instance* try the four cases
     #case 1: the cashier does not have the stall 
     cust1.validate_order(cash2, s1, 'apple', 5)
     cust2.validate_order(cash1, s3, 'corn', 2)
