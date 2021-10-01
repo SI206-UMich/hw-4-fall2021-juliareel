@@ -91,7 +91,7 @@ class Stall:
     # Takes the food name and the quantity and returns True if there 
     # is enough food left in the inventory and False otherwise.
     def has_item(self, food_name, food_quantity):
-        if self.inventory[food_name] >= food_quantity:
+        if food_name in self.inventory and self.inventory[food_name] >= food_quantity:
             return True
         else:
             return False
@@ -205,24 +205,32 @@ class TestAllMethods(unittest.TestCase):
         # Test to see if has_item returns True when a stall has enough items left
         # Please follow the instructions below to create three different kinds of test cases 
         # Test case 1: the stall does not have this food item: 
-        
+        self.assertFalse(self.s1.has_item('Blueberries', 10))
+
         # Test case 2: the stall does not have enough food item: 
+        self.assertFalse(self.s1.has_item('Burger', 50))
         
         # Test case 3: the stall has the food item of the certain quantity: 
-        pass
+        self.assertTrue(self.s2.has_item('Taco', 10))
 
 	# Test validate order
     def test_validate_order(self):
+        # call validate order to see if the cashier in the function call can work the stall passed
+
 		# case 1: test if a customer doesn't have enough money in their wallet to order
+        self.f1.validate_order(self.c1, self.s1, 'Burger', 30)
 
 		# case 2: test if the stall doesn't have enough food left in stock
+        self.f2.reload_money(500)
+        self.f2.validate_order(self.c2, self.s3, 'Burger', 50)
 
 		# case 3: check if the cashier can order item from that stall
-        pass
+        self.s4 = Stall("Testing additional stall", {"Burger":40, "Taco":50})
+        self.f2.validate_order(self.c2, self.s4, 'Taco', 5)
 
     # Test if a customer can add money to their wallet
     def test_reload_money(self):
-        pass
+        self.f1.reload_money(100)
     
 ### Write main function
 def main():
@@ -271,7 +279,7 @@ def main():
     #case 2: the casher has the stall, but not enough ordered food or the ordered food item
     cust1.validate_order(cash1, s1, 'tomato', 8)
     cust2.validate_order(cash2, s3, 'carrot', 15)
-    cust3.validate_order(cash1, s2, 'corn', 8)
+    cust3.validate_order(cash1, s2, 'apple', 8)
     
     #case 3: the customer does not have enough money to pay for the order: 
     cust1.validate_order(cash1, s1, 'strawberry', 22)
